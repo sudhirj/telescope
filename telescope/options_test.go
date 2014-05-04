@@ -5,23 +5,52 @@ import (
 	"testing"
 )
 
-func TestParamCreation(t *testing.T) {
-	s := NewOptionsFromMap(map[string]string{"origin": "http://www.google.com", "width": "42", "height": "24"})
-	if s.Origin != "http://www.google.com" {
-		t.Error("Wrong origin parsed")
-	}
-	if s.Width != 42 {
-		t.Error("Wrong width parsed")
-	}
-	if s.Height != 24 {
-		t.Error("Wrong height initialized")
-	}
-}
-
 func TestParamCreationFromRequestObject(t *testing.T) {
-	testReq, _ := http.NewRequest("GET", "http://www.google.com?w=42&origin=abc&h=23", nil)
+	testReq, _ := http.NewRequest("GET", "http://www.google.com/aHR0cDovL2RlbWpqdG5mbHc4dDkuY2xvdWRmcm9udC5uZXQ=/abcdef?w=42&h=23&blur=2.345", nil)
 	p := NewOptionsFromRequest(testReq)
-	if p.Width != 42 || p.Height != 23 || p.Origin != "abc" {
-		t.Fail()
+	if p.Width != 42 {
+		t.Error("wrong width, got ", p.Width)
 	}
+	if p.Height != 23 {
+		t.Error("wrong height, got ", p.Height)
+	}
+	if p.Origin != "http://demjjtnflw8t9.cloudfront.net" {
+		t.Error("wrong origin, got ", p.Origin)
+	}
+	if p.File != "abcdef" {
+		t.Error("wrong file, got ", p.File)
+	}
+	if p.Blur != 2.345 {
+		t.Error("blur was wrong, got ", p.Blur)
+	}
+	url, err := p.SourceURL()
+	if err != nil {
+		t.Error("source url creation failed")
+	}
+	if url.String() != "http://demjjtnflw8t9.cloudfront.net/abcdef" {
+		t.Error("wrong source url, got ", url.String())
+	}
+
+	testReq, _ = http.NewRequest("GET", "http://www.google.com/aHR0cDovL2RlbWpqdG5mbHc4dDkuY2xvdWRmcm9udC5uZXQ=/abcdef/klm/xyz.jpg", nil)
+	p = NewOptionsFromRequest(testReq)
+	if p.File != "abcdef/klm/xyz.jpg" {
+		t.Error("wrong file, got ", p.File)
+	}
+
+	if p.Height != 0 {
+		t.Error("height ought to be 0")
+	}
+
+	if p.Blur != 0 {
+		t.Error("blur ought to be 0")
+	}
+
+	url, err = p.SourceURL()
+	if err != nil {
+		t.Error("source url creation failed")
+	}
+	if url.String() != "http://demjjtnflw8t9.cloudfront.net/abcdef/klm/xyz.jpg" {
+		t.Error("wrong source url, got ", url.String())
+	}
+
 }

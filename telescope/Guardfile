@@ -1,6 +1,0 @@
-
-guard 'shell' do
-  watch(/(.*).go/) do |m|
-  	`go test`
-  end
-end

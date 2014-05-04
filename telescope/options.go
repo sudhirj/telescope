@@ -1,41 +1,60 @@
 package telescope
 
 import (
+	"encoding/base64"
 	"net/http"
+	"net/url"
 	"strconv"
+	"strings"
 )
 
 type Options struct {
 	Origin string
 	Width  uint
 	Height uint
+	Blur   float64
+	File   string
 }
 
-func NewOptionsFromMap(options map[string]string) *Options {
-	p := new(Options)
-	p.Origin = options["origin"]
-
-	parse := func(opt string) (uint64, error) {
-		return strconv.ParseUint(options[opt], 10, 0)
-	}
-
-	width, err := parse("width")
-	if err == nil {
-		p.Width = uint(width)
-	}
-
-	height, err := parse("height")
-	if err == nil {
-		p.Height = uint(height)
-	}
-
-	return p
+func (opts *Options) SourceURL() (*url.URL, error) {
+	return url.Parse(strings.Join([]string{opts.Origin, opts.File}, "/"))
 }
 
 func NewOptionsFromRequest(req *http.Request) *Options {
-	return NewOptionsFromMap(map[string]string{
-		"width":  req.FormValue("w"),
-		"height": req.FormValue("h"),
-		"origin": req.FormValue("origin"),
-	})
+
+	opts := new(Options)
+
+	parseInt := func(opt string) (uint64, error) {
+		return strconv.ParseUint(opt, 10, 0)
+	}
+
+	parseFloat := func(opt string) (float64, error) {
+		return strconv.ParseFloat(opt, 64)
+	}
+
+	width, err := parseInt(req.FormValue("w"))
+	if err == nil {
+		opts.Width = uint(width)
+	}
+
+	height, err := parseInt(req.FormValue("h"))
+	if err == nil {
+		opts.Height = uint(height)
+	}
+
+	blur, err := parseFloat(req.FormValue("blur"))
+	if err == nil {
+		opts.Blur = blur
+	}
+
+	pathParts := strings.SplitN(req.URL.Path, "/", 3)
+
+	origin, err := base64.URLEncoding.DecodeString(pathParts[1])
+	if err == nil {
+		opts.Origin = string(origin)
+	}
+
+	opts.File = pathParts[2]
+
+	return opts
 }
