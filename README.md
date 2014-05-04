@@ -3,7 +3,7 @@
 
 We all produce and procure high quality images these days from a variety of sources, but the most efficient way to display them depends on our viewers - their screen density, size and the context in which the images are used. 
 
-Telescope lets you store and server your images via any static fileserver (AWS S3 / Apache / NGINX) and resize them and trasnform them on the fly using query parameters that you can set on the URL, either on the server or the client side.
+Telescope lets you store and server your images via any static fileserver and resize / trasnform them on the fly using query parameters that you can set on the URL, either on the server or the client side.
 
 #### How to use it
 For example, let's say all your images are stored on the following server(s): 
