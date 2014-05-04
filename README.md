@@ -1,5 +1,28 @@
 ## Telescope
-
 ### A fast, lightweight image resizing and transformation proxy
 
-Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
+We all produce and procure high quality images these days from a variety of sources, but the most efficient way to display them depends on our viewers - their screen density, size and the context in which the images are used. 
+
+Telescope lets you store and server your images via any static fileserver (AWS S3 / Apache / NGINX) and resize them and trasnform them on the fly using query parameters that you can set on the URL, either on the server or the client side.
+
+#### How to use it
+For example, let's say all your images are stored on the following server(s): 
+
+	http://mybucket.aws.com // urlsafe Base64: aHR0cDovL215YnVja2V0LmF3cy5jb20=
+    http://static.mysite.com // urlsafe Base64: aHR0cDovL3N0YXRpYy5teXNpdGUuY29t
+
+and you've set up Telescope on http://www.mytelescope.com. If you have an images at 
+
+	http://mybucket.aws.com/funnycat1.jpg
+    http://static.mysite.com/logo.png
+
+Then you can use the following URLs to automatically resize and transform your images:
+
+	http://www.mytelescope.com/aHR0cDovL215YnVja2V0LmF3cy5jb20=/funnycat1.jpg?w=200
+    http://www.mytelescope.com/aHR0cDovL3N0YXRpYy5teXNpdGUuY29t/logo.png?w=100&h=100
+    http://www.mytelescope.com/aHR0cDovL215YnVja2V0LmF3cy5jb20=/funnycat1.jpg?blur=4.5
+    
+And so on. Telescope will fetch and transform the images according to the numbers provided. There's abosolutely no configuration necessary. 
+
+For best results, put the Telescope server behind a CDN like AWS Cloudfront (http://aws.amazon.com/cloudfront/). Telescope automatically adds forever + public cache headers to all outgoing images, so these images will be cached by CDN as long as they're being used.
+
