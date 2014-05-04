@@ -36,6 +36,10 @@ Setting the `h` paramter to any integer will resize the image to that height. If
 ##### Blur `blur` - `float, pixel radius`
 The `blur` paramter applies a Gaussian blur to the image, with the given pixel radius.
 
+#### Installation & Running
+	go get github.com/sudhirj/telescope
+    telescope --port=:8353
+
 ### Licensing
 Telescope is available under a [GPLv3 License](http://opensource.org/licenses/GPL-3.0). This is intended for personal and non-commercial use.
 
