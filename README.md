@@ -22,7 +22,16 @@ Then you can use the following URLs to automatically resize, transform and serve
     http://telescope.mysite.com/aHR0cDovL3N0YXRpYy5teXNpdGUuY29t/logo.png?w=100&h=100
     http://telescope.mysite.com/aHR0cDovL215YnVja2V0LmF3cy5jb20=/funnycat1.jpg?blur=4.5
     
-And so on. Telescope will fetch and transform the images according to the numbers provided. There's abosolutely no configuration necessary. 
+And so on. Telescope will fetch and transform the images according to the parameters provided. There's abosolutely no configuration necessary. 
 
 For best results, put the Telescope server behind a CDN like [AWS Cloudfront](http://aws.amazon.com/cloudfront/). Telescope automatically adds forever + public cache headers to all outgoing images, so these images will be cached by the CDN as long as they're being used.
 
+#### Parameter Reference
+##### Width `w` - `integer, pixels`
+Setting the `w` paramter to any integer will resize the image to that width. If no height is provided, the original aspect ratio will be maintained. If a height is also provided via the `h` paramter, the image will be shrunk or stretched to the specifed dimensions. 
+
+##### Height `h` - `integer, pixels`
+Setting the `h` paramter to any integer will resize the image to that height. If no width is provided, the original aspect ratio will be maintained. If a width is also provided via the `w` paramter, the image will be shrunk or stretched to the specifed dimensions.
+
+##### Blur `blur` - `float, pixel radius`
+The `blur` paramter applies a Gaussian blur to the image, with the given pixel radius.
