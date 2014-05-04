@@ -6,7 +6,7 @@ import (
 )
 
 func TestParamCreationFromRequestObject(t *testing.T) {
-	testReq, _ := http.NewRequest("GET", "http://www.google.com/aHR0cDovL2RlbWpqdG5mbHc4dDkuY2xvdWRmcm9udC5uZXQ=/abcdef?w=42&h=23&blur=2.345", nil)
+	testReq, _ := http.NewRequest("GET", "http://www.google.com/aHR0cDovL2RlbWpqdG5mbHc4dDkuY2xvdWRmcm9udC5uZXQv/abcdef?w=42&h=23&blur=2.345", nil)
 	p := NewOptionsFromRequest(testReq)
 	if p.Width != 42 {
 		t.Error("wrong width, got ", p.Width)
@@ -14,7 +14,7 @@ func TestParamCreationFromRequestObject(t *testing.T) {
 	if p.Height != 23 {
 		t.Error("wrong height, got ", p.Height)
 	}
-	if p.Origin != "http://demjjtnflw8t9.cloudfront.net" {
+	if p.Origin != "http://demjjtnflw8t9.cloudfront.net/" {
 		t.Error("wrong origin, got ", p.Origin)
 	}
 	if p.File != "abcdef" {

@@ -17,7 +17,12 @@ type Options struct {
 }
 
 func (opts *Options) SourceURL() (*url.URL, error) {
-	return url.Parse(strings.Join([]string{opts.Origin, opts.File}, "/"))
+	baseUrl, err := url.Parse(opts.Origin)
+	if err != nil {
+		return nil, err
+	}
+	baseUrl.Path = opts.File
+	return baseUrl, nil
 }
 
 func NewOptionsFromRequest(req *http.Request) *Options {
