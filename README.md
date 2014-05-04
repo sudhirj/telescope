@@ -37,7 +37,7 @@ Setting the `h` paramter to any integer will resize the image to that height. If
 The `blur` paramter applies a Gaussian blur to the image, with the given pixel radius.
 
 ### Licensing
-Telescope is available under a [GPLv3 License](http://opensource.org/licenses/GPL-3.0). This is intended for personal and non commercial use.
+Telescope is available under a [GPLv3 License](http://opensource.org/licenses/GPL-3.0). This is intended for personal and non-commercial use.
 
-Telescope is also available under the [MIT License](http://opensource.org/licenses/MIT) on payment of 0.5 BTC to the following address: `15PW8pyAY6y5vS39zWedFe6x1DzmCtECoC`. The MIT License is automatically granted to either the entity sending the BTC or the entity on behalf of whom the payment is sent. This license is intended for commercial use and is non-transferable.
+Telescope is also available under the [MIT License](http://opensource.org/licenses/MIT) on payment of 0.5 BTC to the following address: `15PW8pyAY6y5vS39zWedFe6x1DzmCtECoC`. The MIT License is automatically granted to either the entity sending the BTC or the entity on behalf of whom the payment is sent. This license is intended for either commercial or non-commercial use and is non-transferable.
 
