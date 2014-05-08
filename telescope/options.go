@@ -59,7 +59,9 @@ func NewOptionsFromRequest(req *http.Request) *Options {
 		opts.Origin = string(origin)
 	}
 
-	opts.File = pathParts[2]
+	if len(pathParts) > 2 {
+		opts.File = pathParts[2]
+	}
 
 	return opts
 }

@@ -7,6 +7,7 @@ import (
 	"image/png"
 	"log"
 	"net/http"
+	"net/url"
 	"runtime"
 	"strings"
 
@@ -15,6 +16,7 @@ import (
 )
 
 var port = flag.String("port", ":8353", "Port to listen on. Defaults to :8353")
+var host = flag.String("host", "", "Host to fetch images from. If this option isn't specified, Telescope assumes the first part of the path is the base64 encoded host")
 
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
@@ -29,10 +31,24 @@ func main() {
 	}
 }
 
+func chooseURL(req *http.Request) (*url.URL, error) {
+	opts := telescope.NewOptionsFromRequest(req)
+	if *host != "" {
+		imageURL, err := url.Parse(*host)
+		if err != nil {
+			return nil, err
+		}
+		imageURL.Path = req.URL.Path
+		return imageURL, nil
+	} else {
+		return opts.SourceURL()
+	}
+}
+
 func serve(rw http.ResponseWriter, req *http.Request) {
 	opts := telescope.NewOptionsFromRequest(req)
+	imageURL, err := chooseURL(req)
 
-	imageURL, err := opts.SourceURL()
 	if err != nil {
 		rw.WriteHeader(404)
 		return
