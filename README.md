@@ -37,8 +37,19 @@ Setting the `h` paramter to any integer will resize the image to that height. If
 The `blur` paramter applies a Gaussian blur to the image, with the given pixel radius.
 
 #### Installation & Running
-	go get github.com/sudhirj/telescope
+  	go get github.com/sudhirj/telescope
     telescope --port=:8353
+
+You can also run Telescope on EC2, either on an individual instance or a group, using the following startup script:
+
+    #!/bin/bash
+    yum update -y
+    yum install -y go
+    export GOPATH=~/gocode
+    go get github.com/sudhirj/telescope
+    nohup ~/gocode/bin/telescope &
+
+
 
 ### Licensing
 Telescope is also available under the [MIT License](http://opensource.org/licenses/MIT). 
