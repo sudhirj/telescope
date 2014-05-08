@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"image"
 	"image/jpeg"
 	"image/png"
@@ -71,6 +72,9 @@ func serve(rw http.ResponseWriter, req *http.Request) {
 	rw.Header().Add("Content-Type", strings.Join([]string{"image", format}, "/"))
 
 	wipImage := sourceImage
+
+	aspectRatio := float64(sourceImage.Bounds().Dx()) / float64(sourceImage.Bounds().Dy())
+	rw.Header().Add("X-Telescope-Aspect-Ratio", fmt.Sprintf("%6.8f", aspectRatio))
 
 	if opts.Width > 0 || opts.Height > 0 {
 		wipImage = imaging.Resize(sourceImage, int(opts.Width), int(opts.Height), imaging.Lanczos)
