@@ -3,7 +3,7 @@
 
 We all produce and procure high quality images these days from a variety of sources, but the most efficient way to display them depends on our viewers - their screen density, size and the context in which the images are used. 
 
-Telescope lets you store and server your images via any static fileserver (AWS S3 / Apache / NGINX) and resize them and trasnform them on the fly using query parameters that you can set on the URL, either on the server or the client side.
+Telescope lets you store and server your images via any static fileserver and resize / trasnform them on the fly using query parameters that you can set on the URL, either on the server or the client side.
 
 #### How to use it
 For example, let's say all your images are stored on the following server(s): 
@@ -35,3 +35,13 @@ Setting the `h` paramter to any integer will resize the image to that height. If
 
 ##### Blur `blur` - `float, pixel radius`
 The `blur` paramter applies a Gaussian blur to the image, with the given pixel radius.
+
+#### Installation & Running
+	go get github.com/sudhirj/telescope
+    telescope --port=:8353
+
+### Licensing
+Telescope is available under a [GPLv3 License](http://opensource.org/licenses/GPL-3.0). This is intended for personal and non-commercial use.
+
+Telescope is also available under the [MIT License](http://opensource.org/licenses/MIT) on payment of 0.5 BTC to the following address: `15PW8pyAY6y5vS39zWedFe6x1DzmCtECoC`. The MIT License is automatically granted to either the entity sending the BTC or the entity on behalf of whom the payment is sent. This license is intended for either commercial or non-commercial use and is non-transferable.
+
